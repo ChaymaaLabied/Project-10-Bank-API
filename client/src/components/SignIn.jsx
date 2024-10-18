@@ -12,8 +12,6 @@ export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log("username :", username);
-  console.log("password :", password);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // type button a sa place

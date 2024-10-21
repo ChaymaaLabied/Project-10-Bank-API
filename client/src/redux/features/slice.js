@@ -73,6 +73,7 @@ export const editUserProfile = createAsyncThunk(
 export const counterSlice = createSlice({
   name: "counter",
   initialState,
+  // il est ou l'action ou reducer !! dekht
   reducers: {
     logout: (state) => {
       state.token = "";

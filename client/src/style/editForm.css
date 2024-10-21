@@ -1,0 +1,43 @@
+.content {
+    width: 80%;
+    margin: 1em auto;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+  }
+  
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .button {
+    max-width: fit-content;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+  }
+  
+  .input {
+    padding: 5px;
+    font-size: 1.2rem;
+    text-align: left;
+    flex: 1;
+    width: 90%;
+  }
+  .one-saveBtn {
+    align-items: flex-end;
+  }
+
+  .two-cancelBtn {
+    align-items: flex-start;
+  }
+
+  .formBtn {
+    width: 30%;
+  }
+

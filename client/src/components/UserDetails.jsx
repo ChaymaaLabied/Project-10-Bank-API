@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { editUserProfile, getUserDetails } from "../redux/features/slice";
+import "../style/editForm.css";
 
 export default function UserDetails() {
   const navigate = useNavigate();
@@ -34,15 +35,14 @@ export default function UserDetails() {
   return (
     <main className="main bg-dark">
       <div className="header">
+        <h1>Welcome back</h1>
         {!isEditOn ? (
           <>
-            <h1>
-              Welcome back
-              <br />
+            <h2>
               {currentUser && (
                 <>{`${currentUser.firstName} ${currentUser.lastName}`}!</>
               )}
-            </h1>
+            </h2>
             <button
               className="edit-button"
               onClick={() => {
@@ -53,39 +53,44 @@ export default function UserDetails() {
             </button>
           </>
         ) : (
-          <form>
-            <div className="edit-form">
+          <form className="content">
+            <div className="col one-saveBtn" >
               <input
                 type="text"
+                className="input"
                 id="firstname"
                 value={editFirstName}
                 onChange={(e) => setEditFirstName(e.target.value)}
               />
+              <button
+                type="button"
+                className="edit-button formBtn"
+                onClick={() => {
+                  dispatch(
+                    editUserProfile({
+                      firstName: editFirstName,
+                      lastName: editLastName,
+                    })
+                  );
+                  setIsEditOn(false);
+                }}
+              >
+                Save
+              </button>
+            </div>
+            <div className="col two-cancelBtn" >
               <input
                 type="input"
+                className="input"
                 id="lastname"
                 value={editLastName}
                 onChange={(e) => setEditLastName(e.target.value)}
               />
+
+              <button type="button" className="edit-button formBtn" onClick={handleCancel}>
+                Cancel
+              </button>
             </div>
-            <button
-              type="button"
-              // className="sign-in-button"
-              onClick={() => {
-                dispatch(
-                  editUserProfile({
-                    firstName: editFirstName,
-                    lastName: editLastName,
-                  })
-                );
-                setIsEditOn(false);
-              }}
-            >
-              Save
-            </button>
-            <button type="button" onClick={handleCancel}>
-              Cancel
-            </button>
           </form>
         )}
       </div>

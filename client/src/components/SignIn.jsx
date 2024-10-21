@@ -12,7 +12,6 @@ export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-
   const handleSubmit = (e) => {
     e.preventDefault(); // type button a sa place
     dispatch(
@@ -27,7 +26,7 @@ export default function SignIn() {
     if (token) {
       navigate("/user");
     }
-  },[token,navigate]);
+  }, [token, navigate]);
 
   return (
     <main className="main bg-dark">

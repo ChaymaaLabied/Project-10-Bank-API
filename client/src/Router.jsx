@@ -2,8 +2,9 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
 import Home from "./pages/Home.jsx";
-import SignIn from "./components/SignIn.jsx";
-import UserDetails from "./components/UserDetails.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import UserDetails from "./pages/UserDetails.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -11,10 +12,10 @@ export default function Router() {
       path: "/",
       element: <Layout />,
       children: [
-        //   {
-        //     path: "*",
-        //     element: <NotFound />,
-        //   },
+          {
+            path: "*",
+            element: <NotFound />,
+          },
         {
           index: true,
           element: <Home />,
@@ -29,10 +30,10 @@ export default function Router() {
         },
       ],
     },
-    // {
-    //   path: "*",
-    //   element: <NotFound />,
-    // },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

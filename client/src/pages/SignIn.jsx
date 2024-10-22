@@ -4,16 +4,20 @@ import { login } from "../redux/features/slice";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+  // Récupère les erreurs de connexion depuis le store Redux
   const error = useSelector((state) => state.counter.error);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Récupère le token utilisateur depuis le store Redux
   const token = useSelector((state) => state.counter.token);
+
+  // États locaux pour les champs du formulaire
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // type button a sa place
+  // Gérer la soumission du formulaire de connexion
+  const handleSubmit = () => {
     dispatch(
       login({
         username: username,
@@ -22,6 +26,7 @@ export default function SignIn() {
     );
   };
 
+  // Rediriger vers la page "user" si l'utilisateur est connecté (token présent)
   useEffect(() => {
     if (token) {
       navigate("/user");
@@ -39,6 +44,7 @@ export default function SignIn() {
             <input
               type="text"
               id="username"
+              // Mettre à jour l'état avec la valeur saisie par l'utilisateur
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -47,6 +53,7 @@ export default function SignIn() {
             <input
               type="password"
               id="password"
+              // Mettre à jour l'état avec la valeur saisie par l'utilisateur
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -54,10 +61,12 @@ export default function SignIn() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
+          {/* Afficher un message d'erreur si une erreur survient */}
           {error && <span>{error}</span>}
           <button
             type="button"
             className="sign-in-button"
+            // Appel de la fonction handleSubmit lors du clic sur le bouton
             onClick={handleSubmit}
           >
             Sign In

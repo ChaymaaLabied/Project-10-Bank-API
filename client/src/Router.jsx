@@ -30,10 +30,6 @@ export default function Router() {
         },
       ],
     },
-    {
-      path: "*",
-      element: <NotFound />,
-    },
   ]);
 
   return <RouterProvider router={router} />;

@@ -30,45 +30,45 @@ export const login = createAsyncThunk("api/logIn", async (argument) => {
 });
 
 export const getUserDetails = createAsyncThunk(
-    "api/userDetails",
-    async (arg, { getState }) => {
-      // Accessing the entire Redux state
-      const state = getState();
-  
-      const response = await fetch(`${BASE_URL}/profile`, {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${state.counter.token}`,
-        },
-      });
-      const data = await response.json();
-      return data;
-    }
-  );
-  //MODIFIER LES PROFILS
+  "api/userDetails",
+  async (arg, { getState }) => {
+    // Accessing the entire Redux state
+    const state = getState();
+
+    const response = await fetch(`${BASE_URL}/profile`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state.counter.token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  }
+);
+//MODIFIER LES PROFILS
 export const editUserProfile = createAsyncThunk(
-    "api/editUserProfile",
-    async ({ firstName, lastName }, { getState }) => {
-      const state = getState();
-  
-      const response = await fetch(`${BASE_URL}/profile`, {
-        method: "PUT",
-        body: JSON.stringify({
-          firstName,
-          lastName,
-        }),
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${state.counter.token}`,
-        },
-      });
-      const data = await response.json();
-      return data;
-    }
-  );
+  "api/editUserProfile",
+  async ({ firstName, lastName }, { getState }) => {
+    const state = getState();
+
+    const response = await fetch(`${BASE_URL}/profile`, {
+      method: "PUT",
+      body: JSON.stringify({
+        firstName,
+        lastName,
+      }),
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state.counter.token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  }
+);
 
 export const counterSlice = createSlice({
   name: "counter",
@@ -77,6 +77,7 @@ export const counterSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.token = "";
+      state.user = null;
     },
   },
   extraReducers: (builder) => {

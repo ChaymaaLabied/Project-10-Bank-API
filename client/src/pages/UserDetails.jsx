@@ -9,38 +9,48 @@ export default function UserDetails() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.counter.token);
 
+  // Récupérer les détails de l'utilisateur depuis le store
   const currentUser = useSelector((state) => state.counter.user);
-  const [isEditOn, setIsEditOn] = useState(false);
-  const [editFirstName, setEditFirstName] = useState(currentUser?.firstName);
-  const [editLastName, setEditLastName] = useState(currentUser?.lastName);
 
+  // États locaux pour gérer les valeurs de l'édition des noms
+  const [isEditOn, setIsEditOn] = useState(false); // Gérer l'état d'édition (actif ou non)
+  const [editFirstName, setEditFirstName] = useState(currentUser?.firstName); // Prénom modifiable
+  const [editLastName, setEditLastName] = useState(currentUser?.lastName); // Nom modifiable
+
+  // Mettre à jour les champs d'édition quand currentUser est récupéré
+  useEffect(() => {
+    if (currentUser) {
+      setEditFirstName(currentUser.firstName);
+      setEditLastName(currentUser.lastName);
+    }
+  }, [currentUser]);
+
+  // Fonction pour gérer la sauvegarde des modifications
   const handleSave = () => {
-    // je dois tt mettre dans une fct
     dispatch(
       editUserProfile({
         firstName: editFirstName,
         lastName: editLastName,
       })
     );
-    setEditFirstName(""); // Vider le champ après la sauvegarde
-    setEditLastName(""); // Vider le champ après la sauvegarde
-    setIsEditOn(false); // Terminer l'édition
+    setIsEditOn(false); // Terminer l'édition après sauvegarde
   };
 
+  // Fonction pour annuler l'édition et réinitialiser les champs
   const handleCancel = () => {
-    setEditFirstName("");
-    setEditLastName("");
-    setIsEditOn(false);
+    setEditFirstName(currentUser?.firstName); // Réinitialiser le prénom
+    setEditLastName(currentUser?.lastName); // Réinitialiser le nom
+    setIsEditOn(false); // Fermer le mode édition
   };
 
-  // PRIVATE ROUTE, SHOULD NOT ACCESS WITHOUT TOKEN
-
+  // Vérifier si l'utilisateur est authentifié (sinon, redirection vers l'accueil)
   useEffect(() => {
     if (!token) {
       navigate("/");
     }
   }, [token, navigate]);
 
+  // Récupérer les détails de l'utilisateur 
   useEffect(() => {
     dispatch(getUserDetails());
   }, [dispatch]);
@@ -56,6 +66,7 @@ export default function UserDetails() {
                 <>{`${currentUser.firstName} ${currentUser.lastName}`}!</>
               )}
             </h2>
+            {/* Bouton pour activer le mode édition */}
             <button
               className="edit-button"
               onClick={() => {
@@ -68,6 +79,7 @@ export default function UserDetails() {
         ) : (
           <form className="content">
             <div className="col one-saveBtn">
+              {/* Champ pour éditer le prénom */}
               <input
                 type="text"
                 className="input"
@@ -75,6 +87,7 @@ export default function UserDetails() {
                 value={editFirstName}
                 onChange={(e) => setEditFirstName(e.target.value)}
               />
+              {/* Bouton de sauvegarde, désactivé si un champ est vide */}
               <button
                 type="button"
                 className={`edit-button formBtn ${
@@ -87,6 +100,7 @@ export default function UserDetails() {
               </button>
             </div>
             <div className="col two-cancelBtn">
+              {/* Champ pour éditer le nom */}
               <input
                 type="input"
                 className="input"
@@ -94,7 +108,7 @@ export default function UserDetails() {
                 value={editLastName}
                 onChange={(e) => setEditLastName(e.target.value)}
               />
-
+              {/* Bouton pour annuler l'édition */}
               <button
                 type="button"
                 className="edit-button formBtn"
@@ -107,6 +121,7 @@ export default function UserDetails() {
         )}
       </div>
       <h2 className="sr-only">Accounts</h2>
+      {/* Sections pour afficher les comptes de l'utilisateur */}
       <section className="account">
         <div className="account-content-wrapper">
           <h3 className="account-title">Argent Bank Checking (x8349)</h3>

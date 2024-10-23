@@ -12,10 +12,10 @@ export default function Router() {
       path: "/",
       element: <Layout />,
       children: [
-          {
-            path: "*",
-            element: <NotFound />,
-          },
+        {
+          path: "*",
+          element: <NotFound />,
+        },
         {
           index: true,
           element: <Home />,
@@ -27,6 +27,7 @@ export default function Router() {
         {
           path: "/user",
           element: <UserDetails />,
+          errorElement: <NotFound />,
         },
       ],
     },

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editUserProfile, getUserDetails } from "../redux/features/slice";
+import { editUserProfile, getUserDetails } from "../redux/features/authSlice";
 import "../style/editForm.css";
 
 export default function UserDetails() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.counter.token);
+  const token = useSelector((state) => state.auth.token);
 
   // Récupérer les détails de l'utilisateur depuis le store
-  const currentUser = useSelector((state) => state.counter.user);
+  const currentUser = useSelector((state) => state.auth.user);
 
   // États locaux pour gérer les valeurs de l'édition des noms
   const [isEditOn, setIsEditOn] = useState(false); // Gérer l'état d'édition (actif ou non)

@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/features/slice";
+import { logout } from "../redux/features/authSlice";
 
 
 export default function Header() {
-  const token = useSelector((state) => state.counter.token);
-  const currentUser = useSelector((state) => state.counter.user);
+  const token = useSelector((state) => state.auth.token);
+  const currentUser = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

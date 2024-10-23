@@ -41,7 +41,7 @@
   width: 30%;
 }
 .edit-button-disabled {
-  background-color: #ccc; /* Couleur grise */
-  cursor: not-allowed; /* Curseur indiquant que le bouton est désactivé */
-  opacity: 0.6; /* Opacité réduite pour donner l'impression de désactivation */
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }

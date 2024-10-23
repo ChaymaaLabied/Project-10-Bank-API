@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/features/slice";
+import { login } from "../redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   // Récupère les erreurs de connexion depuis le store Redux
-  const error = useSelector((state) => state.counter.error);
+  const error = useSelector((state) => state.auth.error);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // Récupère le token utilisateur depuis le store Redux
-  const token = useSelector((state) => state.counter.token);
+  const token = useSelector((state) => state.auth.token);
 
   // États locaux pour les champs du formulaire
   const [username, setUsername] = useState("");

@@ -1,9 +1,9 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
 host: localhost:3001
 basePath: /api/v1
 schemes:
@@ -21,18 +21,19 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/Login'
+            $ref: "#/definitions/Login"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Login Successfully
           schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
+            $ref: "#/definitions/LoginResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
+
   /user/signup:
     post:
       tags:
@@ -45,99 +46,76 @@ paths:
           description: Signup Payload
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Signup Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
-  /user/profile:
-    post:
+
+  /transactions:
+    get:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
+        - Transaction Module
+      summary: Find the Transactions of the current month
+      description: API for fetching Transactions data of the current month (JWT token required)
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
-        '200':
-          description: User profile retrieved successully
+        "200":
+          description: Get Transactions List Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/TransactionsList"
+        "400":
           description: Invalid Fields
-        '500':
-          description: Internal Server Error
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Profile API
-      description: API for updating a user profile
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: Update user profile attributes
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User profile retrieved successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
+        "500":
+          description: Transactions not found
+
 definitions:
   User:
     properties:
       email:
         type: string
-        description: user email
+        description: User email
       password:
         type: string
-        description: user password
+        description: User password
       firstName:
         type: string
-        description: user first name
+        description: User first name
       lastName:
         type: string
-        description: user last name
+        description: User last name
+
   Login:
     properties:
       email:
         type: string
-        description: user email
+        description: User email
       password:
         type: string
-        description: user password
+        description: User password
+
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+
   ApiResponse:
     type: object
     properties:
@@ -152,15 +130,70 @@ definitions:
             type: string
           email:
             type: string
-  LoginResponse:
+
+  TransactionsList:
     type: object
     properties:
-      token:
+      transactions:
+        type: array
+        items:
+          $ref: "#/definitions/Transaction"
+      total:
+        type: integer
+
+  Transaction:
+    type: object
+    required:
+      - transactionId
+      - date
+      - amount
+      - type
+      - description
+    properties:
+      transactionId:
+        type: integer
+        description: "Transaction ID, cannot be modified or deleted"
+      date:
         type: string
-  UserProfile:
+        format: date
+        description: "Transaction date, cannot be modified or deleted"
+      amount:
+        type: number
+        description: "Transaction amount, cannot be modified or deleted"
+      type:
+        type: string
+        enum:
+          - income
+          - expense
+        description: "Type of transaction"
+      description:
+        type: string
+        description: "Description of the transaction"
+      status:
+        type: string
+        description: "Current status of the transaction (e.g., completed, pending)"
+
+  TransactionDetails:
     type: object
     properties:
-      firstName:
+      transactionId:
+        type: integer
+        description: "Transaction ID, cannot be modified or deleted"
+      date:
         type: string
-      lastName:
+        format: date
+        description: "Transaction date, cannot be modified or deleted"
+      amount:
+        type: number
+        description: "Transaction amount, cannot be modified or deleted"
+      type:
         type: string
+      description:
+        type: string
+      category:
+        type: string
+      status:
+        type: string
+      extraField:
+        type: string
+        description: "Additional information associated with the transaction"

@@ -50,7 +50,7 @@ export default function UserDetails() {
     }
   }, [token, navigate]);
 
-  // Récupérer les détails de l'utilisateur 
+  // Récupérer les détails de l'utilisateur
   useEffect(() => {
     dispatch(getUserDetails());
   }, [dispatch]);

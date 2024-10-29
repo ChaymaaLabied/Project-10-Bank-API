@@ -4,7 +4,6 @@ import { login } from "../redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
-  // Récupère les erreurs de connexion depuis le store Redux
   const error = useSelector((state) => state.auth.error);
 
   const dispatch = useDispatch();
